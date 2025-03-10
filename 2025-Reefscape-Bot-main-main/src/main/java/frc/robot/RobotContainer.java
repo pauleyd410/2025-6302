@@ -7,6 +7,13 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignWithOffset;
 import frc.robot.commands.Autos;
+import frc.robot.commands.IntakeAlgae;
+import frc.robot.commands.IntakeCoral;
+import frc.robot.commands.ScoreAlgae;
+import frc.robot.commands.ScoreCoral;
+import frc.robot.subsystems.AlgaeSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
@@ -25,6 +32,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem driveBase = new SwerveSubsystem();
   private final ElevatorSubsystem elevator = new ElevatorSubsystem();
+  private final ArmSubsystem arm = new ArmSubsystem();
+  private final CoralSubsystem coral = new CoralSubsystem();
+  private final AlgaeSubsystem algae = new AlgaeSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverXbox =
@@ -77,8 +87,20 @@ public class RobotContainer {
     Command driveFieldOrientedAnglularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
     driveBase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     driverXbox.a().onTrue(elevator.setGoal(0));
-    driverXbox.b().onTrue(elevator.setGoal(0.25));
-    driverXbox.y().onTrue(elevator.setGoal(1));
+    driverXbox.y().onTrue(elevator.setGoal(.75));
+    //driverXbox.rightTrigger().onTrue(elevator.setGoal(1.7));
+
+    driverXbox.x().onTrue(arm.setGoal(0));
+    driverXbox.b().onTrue(arm.setGoal(-50));
+    //driverXbox.leftTrigger().onTrue(arm.setGoal(-25));
+
+    //driverXbox.leftBumper().whileTrue(new IntakeAlgae(algae, -.5));
+    //driverXbox.rightBumper().whileTrue(new ScoreAlgae(algae, .5));
+
+    driverXbox.rightTrigger().whileTrue(new IntakeCoral(coral, -1));
+    driverXbox.leftTrigger().whileTrue(new ScoreCoral(coral, -1));
+
+
 
     //Reef alignment
     driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3 ));

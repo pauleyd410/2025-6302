@@ -19,6 +19,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -175,6 +176,8 @@ public class ArmSubsystem extends SubsystemBase{
     @Override
     public void periodic()
     {
-    System.out.println(getAngle());
+    //System.out.println(getAngle());
+    SmartDashboard.putNumber("Arm Angle", getAngle().in(Degrees));
+    SmartDashboard.putNumber("NEO ARM ENCODER", m_encoder.getPosition());
     }  
 }

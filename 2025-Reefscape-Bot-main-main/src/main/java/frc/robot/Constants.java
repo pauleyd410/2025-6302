@@ -42,14 +42,14 @@ public final class Constants {
    public static final double Y_TOLERANCE_REEF_ALIGNMENT = .005;
 
    public static final double DONT_SEE_TAG_WAIT_TIME = 1;
-   public static final double POSE_VALIDATION_TIME = 2; //Drastically Adjust
+   public static final double POSE_VALIDATION_TIME = 0.3; 
 
    // Coral Subsystem constants
-   public static final int CORAL_INTAKE_MOTOR_ID = 31;
+   public static final int CORAL_INTAKE_MOTOR_ID = 21;
    public static final int SmartCoralLimit = 40;
 
    // Algae Subsystem constants
-   public static final int ALGAE_MOTOR_ID = 32;
+   public static final int ALGAE_MOTOR_ID = 20;
    public static final int SmartAlgaeLimit = 40;
 
   public static class OperatorConstants {
@@ -60,13 +60,13 @@ public final class Constants {
 
   public static class ElevatorConstants {
    
-    public static final double kElevatorKp = 10.0; 
+    public static final double kElevatorKp = 4.0; 
     public static final double kElevatorKi = 0.0;
     public static final double kElevatorKd = 0.0;
 
     public static final double kElevatorkS = 0.00; // volts (V)
-    public static final double kElevatorkG = 0.0; // volts (V)
-    public static final double kElevatorkV = 0.0; // volt per velocity (V/(m/s))
+    public static final double kElevatorkG = .23; // volts (V)
+    public static final double kElevatorkV = .5; // volt per velocity (V/(m/s))
     public static final double kElevatorkA = 0.0; // volt per acceleration (V/(m/s^2))
 
     
@@ -82,13 +82,12 @@ public final class Constants {
     public static double kElevatorRampRate = 1;
     public static int kElevatorCurrentLimit = 40;
     public static double kMaxVelocity = Elevator.convertDistanceToRotations(Meters.of(4)).per(Second).in(RPM);
-    public static double kMaxAcceleration = Elevator.convertDistanceToRotations(Meters.of(8)).per(Second).per(Second).in(RPM.per(Second));
+    public static double kMaxAcceleration = Elevator.convertDistanceToRotations(Meters.of(3)).per(Second).per(Second).in(RPM.per(Second));
   }
 
   public static class ArmConstants {
-
     //Adjust PID
-    public static final double kArmKp = 0.0; 
+    public static final double kArmKp = .85; 
     public static final double kArmKi = 0.0;
     public static final double kArmKd = 0.0;
 
@@ -100,11 +99,11 @@ public final class Constants {
 
     public static final Angle   kArmOffsetToHorizantalZero = Rotations.of(0);
     public static final Angle  kArmAllowedClosedLoopError = Arm.convertAngleToSensorUnits(Degrees.of(0.01));
-    public static final double kArmReduction = 25; // 25:1 reduction
+    public static final double kArmReduction = 240; // 240:1 reduction
     public static final double kArmRampRate = 0.5; // seconds from 0 to full
     public static final Angle   kArmStartingAngle = Degrees.of(0);
-    public static final Angle   kMinAngle = Degrees.of(-75);
-    public static final Angle   kMaxAngle = Degrees.of(255);
+    public static final Angle   kMinAngle = Degrees.of(-180);
+    public static final Angle   kMaxAngle = Degrees.of(250);
     public static int kArmCurrentLimit = 40;
     public static double kArmMaxVelocityRPM = Arm.convertAngleToSensorUnits(Degrees.of(90)).per(Second).in(RPM);
     public static final double  kArmMaxAccelerationRPMperSecond = Arm.convertAngleToSensorUnits(Degrees.of(180)).per(Second).per(Second).in(RPM.per(Second));
