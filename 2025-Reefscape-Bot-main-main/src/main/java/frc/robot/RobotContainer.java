@@ -76,9 +76,9 @@ public class RobotContainer {
   private void configureBindings() {
     Command driveFieldOrientedAnglularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
     driveBase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-    driverXbox.x().onTrue(elevator.setGoal(0));
-    driverXbox.a().onTrue(elevator.setGoal(0.25));
-    driverXbox.b().onTrue(elevator.setGoal(1));
+    driverXbox.a().onTrue(elevator.setGoal(0));
+    driverXbox.b().onTrue(elevator.setGoal(0.25));
+    driverXbox.y().onTrue(elevator.setGoal(1));
 
     //Reef alignment
     driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3 ));
