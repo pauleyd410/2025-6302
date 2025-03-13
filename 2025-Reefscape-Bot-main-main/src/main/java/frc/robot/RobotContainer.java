@@ -67,6 +67,14 @@ public class RobotContainer {
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
                                                              .allianceRelativeControl(false);
 
+  // Half speed for testing
+  SwerveInputStream halfSpeed = SwerveInputStream.of(driveBase.getSwerveDrive(),
+                                                                () -> driverXbox.getLeftY() * -5,
+                                                                () -> driverXbox.getLeftX() * -5)
+                                                            .withControllerRotationAxis(driverXbox::getRightX)
+                                                            .deadband(OperatorConstants.DEADBAND)
+                                                            .allianceRelativeControl(true);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -84,26 +92,34 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    // Driver Controls
     Command driveFieldOrientedAnglularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
     driveBase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-    driverXbox.a().onTrue(elevator.setGoal(0));
-    driverXbox.y().onTrue(elevator.setGoal(.75));
-    //driverXbox.rightTrigger().onTrue(elevator.setGoal(1.7));
-
-    driverXbox.x().onTrue(arm.setGoal(0));
-    driverXbox.b().onTrue(arm.setGoal(-50));
-    //driverXbox.leftTrigger().onTrue(arm.setGoal(-25));
-
-    //driverXbox.leftBumper().whileTrue(new IntakeAlgae(algae, -.5));
-    //driverXbox.rightBumper().whileTrue(new ScoreAlgae(algae, .5));
-
-    driverXbox.rightTrigger().whileTrue(new IntakeCoral(coral, -1));
-    driverXbox.leftTrigger().whileTrue(new ScoreCoral(coral, -1));
-
-
+    driverXbox.a().onTrue(elevator.setGoal(0)); //home elevator
+    driverXbox.b().onTrue(elevator.setGoal(.75)); //L3
+    driverXbox.y().onTrue(elevator.setGoal(1.7)); //L4
+    
+    // Half Speed command and controller binding
+    Command driveHalfSpeed = driveBase.driveFieldOriented(halfSpeed);
+    driverXbox.rightBumper().whileTrue(driveHalfSpeed);
+    
+    // Operator Controls
+    operatorXbox.a().onTrue(arm.setGoal(0)); //home arm
+    operatorXbox.b().onTrue(arm.setGoal(-50)); // L3
+    operatorXbox.y().onTrue(arm.setGoal(-25)); // L4
+    operatorXbox.x().onTrue(arm.setGoal(-235)); // Load Coral
+    
+    
+    // Algae controls adjust motor speed
+    operatorXbox.leftBumper().whileTrue(new IntakeAlgae(algae, .5));
+    operatorXbox.rightBumper().whileTrue(new ScoreAlgae(algae, .5));
+    // Coral controls adjust motor speed
+    operatorXbox.leftTrigger().whileTrue(new IntakeCoral(coral, -.5));
+    operatorXbox.rightTrigger().whileTrue(new ScoreCoral(coral, -.5));
 
     //Reef alignment
-    driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3 ));
+    driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3));
     driverXbox.povLeft().onTrue(new AlignWithOffset(false, driveBase).withTimeout(3));
   }
 

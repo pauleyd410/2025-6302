@@ -102,8 +102,8 @@ public final class Constants {
     public static final double kArmReduction = 240; // 240:1 reduction
     public static final double kArmRampRate = 0.5; // seconds from 0 to full
     public static final Angle   kArmStartingAngle = Degrees.of(0);
-    public static final Angle   kMinAngle = Degrees.of(-180);
-    public static final Angle   kMaxAngle = Degrees.of(250);
+    public static final Angle   kMinAngle = Degrees.of(-100);
+    public static final Angle   kMaxAngle = Degrees.of(2);
     public static int kArmCurrentLimit = 40;
     public static double kArmMaxVelocityRPM = Arm.convertAngleToSensorUnits(Degrees.of(90)).per(Second).in(RPM);
     public static final double  kArmMaxAccelerationRPMperSecond = Arm.convertAngleToSensorUnits(Degrees.of(180)).per(Second).per(Second).in(RPM.per(Second));

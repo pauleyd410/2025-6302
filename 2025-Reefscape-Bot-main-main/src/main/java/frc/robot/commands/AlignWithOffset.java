@@ -4,11 +4,13 @@ import java.io.Console;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.SwerveSubsystem;
+
 
 public class AlignWithOffset extends Command{
   private PIDController xController, yController, rotController;
@@ -49,12 +51,14 @@ public class AlignWithOffset extends Command{
     if (LimelightHelpers.getTV("") && LimelightHelpers.getFiducialID("") == tagID) {
       this.dontSeeTagTimer.reset();
 
-      double[] positions = LimelightHelpers.getBotPose_TargetSpace("");
+      double xSpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+      double ySpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+      double rotValue = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-      double xSpeed = xController.calculate(positions[2]);
-      double ySpeed = -yController.calculate(positions[0]);
-      double rotValue = -rotController.calculate(positions[4]);
-
+      xSpeed = xController.calculate(xSpeed);
+      ySpeed = -yController.calculate(ySpeed);
+      rotValue = -rotController.calculate(rotValue);
+      
       driveBase.drive(new Translation2d(yController.getError() < Constants.Y_TOLERANCE_REEF_ALIGNMENT ? xSpeed : 0, ySpeed), rotValue, false);
 
       if (!rotController.atSetpoint() || !yController.atSetpoint() || !xController.atSetpoint()) {
