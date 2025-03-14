@@ -60,13 +60,13 @@ public final class Constants {
 
   public static class ElevatorConstants {
    
-    public static final double kElevatorKp = 4.0; 
+    public static final double kElevatorKp = 6.5; 
     public static final double kElevatorKi = 0.0;
-    public static final double kElevatorKd = 0.0;
+    public static final double kElevatorKd = 0.01;
 
-    public static final double kElevatorkS = 0.00; // volts (V)
-    public static final double kElevatorkG = .23; // volts (V)
-    public static final double kElevatorkV = .5; // volt per velocity (V/(m/s))
+    public static final double kElevatorkS = 0.0; // volts (V)
+    public static final double kElevatorkG = 0.0; // volts (V)
+    public static final double kElevatorkV = 0.0; // volt per velocity (V/(m/s))
     public static final double kElevatorkA = 0.0; // volt per acceleration (V/(m/s^2))
 
     
@@ -80,22 +80,22 @@ public final class Constants {
     public static final Distance kMaxElevatorHeight = Meters.of(1.0); // Adjust for sim
 
     public static double kElevatorRampRate = 1;
-    public static int kElevatorCurrentLimit = 40;
-    public static double kMaxVelocity = Elevator.convertDistanceToRotations(Meters.of(4)).per(Second).in(RPM);
-    public static double kMaxAcceleration = Elevator.convertDistanceToRotations(Meters.of(3)).per(Second).per(Second).in(RPM.per(Second));
+    public static int kElevatorCurrentLimit = 60;
+    public static double kMaxVelocity = Elevator.convertDistanceToRotations(Meters.of(0.01)).per(Second).in(RPM);
+    public static double kMaxAcceleration = Elevator.convertDistanceToRotations(Meters.of(0.01)).per(Second).per(Second).in(RPM.per(Second));
   }
 
   public static class ArmConstants {
     //Adjust PID
-    public static final double kArmKp = .85; 
+    public static final double kArmKp = 0.65; 
     public static final double kArmKi = 0.0;
-    public static final double kArmKd = 0.0;
+    public static final double kArmKd = 0.01;
 
     //Adjust FF
-    public static final double kArmkS = 0; // volts (V)
-    public static final double kArmkG = 0; // volts (V)
-    public static final double kArmkV = 0; // volts per velocity (V/RPM)
-    public static final double kArmkA = 0; // volts per acceleration (V/(RPM/s))
+    public static final double kArmkS = 0.0; // volts (V)
+    public static final double kArmkG = 0.0; // volts (V)
+    public static final double kArmkV = 0.0; // volts per velocity (V/RPM)
+    public static final double kArmkA = 0.0; // volts per acceleration (V/(RPM/s))
 
     public static final Angle   kArmOffsetToHorizantalZero = Rotations.of(0);
     public static final Angle  kArmAllowedClosedLoopError = Arm.convertAngleToSensorUnits(Degrees.of(0.01));

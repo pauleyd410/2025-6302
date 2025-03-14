@@ -6,9 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignWithOffset;
+import frc.robot.commands.AutoOn;
 import frc.robot.commands.Autos;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.IntakeCoral;
+import frc.robot.commands.MoveArmManually;
 import frc.robot.commands.ScoreAlgae;
 import frc.robot.commands.ScoreCoral;
 import frc.robot.subsystems.AlgaeSubsystem;
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final ArmSubsystem arm = new ArmSubsystem();
   private final CoralSubsystem coral = new CoralSubsystem();
   private final AlgaeSubsystem algae = new AlgaeSubsystem();
+  private final AutoOn  autoOn = new AutoOn(driveBase);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController driverXbox =
@@ -67,10 +70,10 @@ public class RobotContainer {
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
                                                              .allianceRelativeControl(false);
 
-  // Half speed for testing
+  // Half working
   SwerveInputStream halfSpeed = SwerveInputStream.of(driveBase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -5,
-                                                                () -> driverXbox.getLeftX() * -5)
+                                                                () -> driverXbox.getLeftY() * -.40,
+                                                                () -> driverXbox.getLeftX() * -.40)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
                                                             .allianceRelativeControl(true);
@@ -96,19 +99,24 @@ public class RobotContainer {
     // Driver Controls
     Command driveFieldOrientedAnglularVelocity = driveBase.driveFieldOriented(driveAngularVelocity);
     driveBase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
-    driverXbox.a().onTrue(elevator.setGoal(0)); //home elevator
-    driverXbox.b().onTrue(elevator.setGoal(.75)); //L3
-    driverXbox.y().onTrue(elevator.setGoal(1.7)); //L4
+    driverXbox.a().onTrue(elevator.setGoal(.03)); //home elevator
+    driverXbox.b().onTrue(elevator.setGoal(.612)); //L3
+    //driverXbox.y().onTrue(elevator.setGoal(1.5)); //L4
+
     
     // Half Speed command and controller binding
     Command driveHalfSpeed = driveBase.driveFieldOriented(halfSpeed);
     driverXbox.rightBumper().whileTrue(driveHalfSpeed);
+
+    //Reef alignment
+    driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3));
+    driverXbox.povLeft().onTrue(new AlignWithOffset(false, driveBase).withTimeout(3));
     
     // Operator Controls
     operatorXbox.a().onTrue(arm.setGoal(0)); //home arm
     operatorXbox.b().onTrue(arm.setGoal(-50)); // L3
-    operatorXbox.y().onTrue(arm.setGoal(-25)); // L4
-    operatorXbox.x().onTrue(arm.setGoal(-235)); // Load Coral
+    //operatorXbox.y().onTrue(arm.setGoal(-32)); // L4
+    operatorXbox.x().onTrue(arm.setGoal(-220)); // Load Coral
     
     
     // Algae controls adjust motor speed
@@ -118,9 +126,9 @@ public class RobotContainer {
     operatorXbox.leftTrigger().whileTrue(new IntakeCoral(coral, -.5));
     operatorXbox.rightTrigger().whileTrue(new ScoreCoral(coral, -.5));
 
-    //Reef alignment
-    driverXbox.povRight().onTrue(new AlignWithOffset(true, driveBase).withTimeout(3));
-    driverXbox.povLeft().onTrue(new AlignWithOffset(false, driveBase).withTimeout(3));
+   // Elevator manual
+		operatorXbox.povUp().whileTrue(new MoveArmManually(arm,-0.3));
+		operatorXbox.povDown().whileTrue(new MoveArmManually(arm, 0.3));
   }
 
   /**
@@ -130,6 +138,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoOn.withTimeout(3);
   }
 }

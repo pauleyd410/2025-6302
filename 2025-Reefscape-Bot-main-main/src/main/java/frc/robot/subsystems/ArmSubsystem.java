@@ -173,6 +173,11 @@ public class ArmSubsystem extends SubsystemBase{
                                    .in(Rotations));
     }
 
+    public void setPower(double power) {
+      m_motor.set(power);
+  }
+  
+
     @Override
     public void periodic()
     {

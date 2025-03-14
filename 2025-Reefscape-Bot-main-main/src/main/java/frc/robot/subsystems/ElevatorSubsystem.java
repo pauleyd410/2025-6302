@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.RobotMath.Elevator;
 
@@ -34,9 +34,9 @@ public class ElevatorSubsystem extends SubsystemBase {
   private final SparkMax m_motor = new SparkMax(10, MotorType.kBrushless);
   private final SparkMax f_motor = new SparkMax(11, MotorType.kBrushless);
   private final RelativeEncoder m_encoder = m_motor.getEncoder();
-  private final DigitalInput m_limitSwitchLow = new DigitalInput(0);
+  private final DigitalInput m_limitSwitch = new DigitalInput(0);
   
-  private final ProfiledPIDController m_controller = new ProfiledPIDController(ElevatorConstants.kElevatorKp, ElevatorConstants.kElevatorKi, ElevatorConstants.kElevatorKd, new Constraints(ElevatorConstants.kMaxVelocity, ElevatorConstants.kMaxAcceleration));
+  private final ProfiledPIDController m_controller = new ProfiledPIDController(ElevatorConstants.kElevatorKp, ElevatorConstants.kElevatorKi, ElevatorConstants.kElevatorKd, new TrapezoidProfile.Constraints(ElevatorConstants.kMaxVelocity, ElevatorConstants.kMaxAcceleration));
 
 
   // Standard classes for controlling our elevator
