@@ -117,8 +117,12 @@ public class RobotContainer {
     // Operator Controls
     operatorXbox.a().onTrue(arm.setGoal(0)); //home arm
     operatorXbox.b().onTrue(arm.setGoal(-50)); // L3
-    operatorXbox.y().onTrue(arm.setGoal(-32)); // L4
+    operatorXbox.y().onTrue(arm.setGoal(-35)); // L4
     operatorXbox.x().onTrue(arm.setGoal(-220)); // Load Coral
+
+    // Algae intake angle
+    operatorXbox.povLeft().onTrue(arm.setGoal(-98));
+    operatorXbox.povRight().onTrue(arm.setGoal(-152));
     
     
     // Algae controls adjust motor speed
@@ -129,8 +133,8 @@ public class RobotContainer {
     operatorXbox.rightTrigger().whileTrue(new ScoreCoral(coral, -.5));
 
    // Elevator manual
-		operatorXbox.povUp().whileTrue(new MoveArmManually(arm,-0.3));
-		operatorXbox.povDown().whileTrue(new MoveArmManually(arm, 0.3));
+	 //operatorXbox.povUp().whileTrue(new MoveArmManually(arm,-0.3));
+	 //operatorXbox.povDown().whileTrue(new MoveArmManually(arm, 0.3));
   }
 
   /**
