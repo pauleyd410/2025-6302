@@ -49,12 +49,14 @@ public class RobotContainer {
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
   */
+
+  //BLUE TEAM NEEDS POSITIVE //RED NEGATIVE
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(driveBase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -1,
-                                                                () -> driverXbox.getLeftX() * -1)
+                                                                () -> driverXbox.getLeftY() * 1,
+                                                                () -> driverXbox.getLeftX() * 1)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
-                                                            .allianceRelativeControl(true);
+                                                            .allianceRelativeControl(false);
 
    /**
    * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
@@ -70,13 +72,13 @@ public class RobotContainer {
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
                                                              .allianceRelativeControl(false);
 
-  // Half working
+  // Half speed working
   SwerveInputStream halfSpeed = SwerveInputStream.of(driveBase.getSwerveDrive(),
-                                                                () -> driverXbox.getLeftY() * -.40,
-                                                                () -> driverXbox.getLeftX() * -.40)
+                                                                () -> driverXbox.getLeftY() * .30,
+                                                                () -> driverXbox.getLeftX() * .30)
                                                             .withControllerRotationAxis(driverXbox::getRightX)
                                                             .deadband(OperatorConstants.DEADBAND)
-                                                            .allianceRelativeControl(true);
+                                                            .allianceRelativeControl(false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -101,7 +103,7 @@ public class RobotContainer {
     driveBase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     driverXbox.a().onTrue(elevator.setGoal(.03)); //home elevator
     driverXbox.b().onTrue(elevator.setGoal(.612)); //L3
-    //driverXbox.y().onTrue(elevator.setGoal(1.5)); //L4
+    driverXbox.y().onTrue(elevator.setGoal(1.5)); //L4
 
     
     // Half Speed command and controller binding
@@ -115,7 +117,7 @@ public class RobotContainer {
     // Operator Controls
     operatorXbox.a().onTrue(arm.setGoal(0)); //home arm
     operatorXbox.b().onTrue(arm.setGoal(-50)); // L3
-    //operatorXbox.y().onTrue(arm.setGoal(-32)); // L4
+    operatorXbox.y().onTrue(arm.setGoal(-32)); // L4
     operatorXbox.x().onTrue(arm.setGoal(-220)); // Load Coral
     
     

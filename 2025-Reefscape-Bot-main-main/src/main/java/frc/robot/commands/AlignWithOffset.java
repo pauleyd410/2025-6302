@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import java.io.Console;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;

@@ -15,7 +15,7 @@ public class AutoOn extends Command {
 
     @Override
     public void initialize() {
-        swerve.drive(new Translation2d(-1.2, 0), 0, false);
+        swerve.drive(new Translation2d(-2, 0), 0, false);
     }
 
     @Override
