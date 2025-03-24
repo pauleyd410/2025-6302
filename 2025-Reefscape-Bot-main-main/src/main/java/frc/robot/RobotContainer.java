@@ -117,7 +117,7 @@ public class RobotContainer {
     // Operator Controls
     operatorXbox.a().onTrue(arm.setGoal(0)); //home arm
     operatorXbox.b().onTrue(arm.setGoal(-50)); // L3
-    operatorXbox.y().onTrue(arm.setGoal(-35)); // L4
+    operatorXbox.y().onTrue(arm.setGoal(-30)); // L4
     operatorXbox.x().onTrue(arm.setGoal(-220)); // Load Coral
 
     // Algae intake angle
