@@ -8,13 +8,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AlignWithOffset;
 import frc.robot.commands.AutoOn;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.IntakeCoral;
-import frc.robot.commands.MoveArmManually;
 import frc.robot.commands.ScoreAlgae;
 import frc.robot.commands.ScoreCoral;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final ArmSubsystem arm = new ArmSubsystem();
   private final CoralSubsystem coral = new CoralSubsystem();
   private final AlgaeSubsystem algae = new AlgaeSubsystem();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
   private final AutoOn  autoOn = new AutoOn(driveBase);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -125,13 +127,15 @@ public class RobotContainer {
     operatorXbox.povRight().onTrue(arm.setGoal(-152));
     
     
-    // Algae controls adjust motor speed
+    // Algae controls adjust motor speed as needed
     operatorXbox.leftBumper().whileTrue(new IntakeAlgae(algae, .5));
     operatorXbox.rightBumper().whileTrue(new ScoreAlgae(algae, .5));
-    // Coral controls adjust motor speed
+    // Coral controls adjust motor speed as needed
     operatorXbox.leftTrigger().whileTrue(new IntakeCoral(coral, -.5));
     operatorXbox.rightTrigger().whileTrue(new ScoreCoral(coral, -.5));
-
+    // Climb controls 
+    operatorXbox.povUp().whileTrue(new Climb(climber, 1));
+    operatorXbox.povDown().whileTrue(new Climb(climber, -1));
    // Elevator manual
 	 //operatorXbox.povUp().whileTrue(new MoveArmManually(arm,-0.3));
 	 //operatorXbox.povDown().whileTrue(new MoveArmManually(arm, 0.3));

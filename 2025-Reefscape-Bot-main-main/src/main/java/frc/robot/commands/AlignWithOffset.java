@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -50,13 +51,21 @@ public class AlignWithOffset extends Command{
     if (LimelightHelpers.getTV("") && LimelightHelpers.getFiducialID("") == tagID) {
       this.dontSeeTagTimer.reset();
 
-      double xSpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-      double ySpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-      double rotValue = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+      //double xSpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+      //double ySpeed = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+      //double rotValue = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
 
-      xSpeed = xController.calculate(xSpeed);
-      ySpeed = -yController.calculate(ySpeed);
-      rotValue = -rotController.calculate(rotValue);
+      //xSpeed = xController.calculate(xSpeed);
+      //ySpeed = -yController.calculate(ySpeed);
+      //rotValue = -rotController.calculate(rotValue);
+
+      double[] positions = LimelightHelpers.getBotPose_TargetSpace("");
+      SmartDashboard.putNumber("x", positions[2]);
+
+      double xSpeed = xController.calculate(positions[2]);
+      SmartDashboard.putNumber("xSpeed", xSpeed);
+      double ySpeed = -yController.calculate(positions[0]);
+      double rotValue = -rotController.calculate(positions[4]);
       
       driveBase.drive(new Translation2d(yController.getError() < Constants.Y_TOLERANCE_REEF_ALIGNMENT ? xSpeed : 0, ySpeed), rotValue, false);
 

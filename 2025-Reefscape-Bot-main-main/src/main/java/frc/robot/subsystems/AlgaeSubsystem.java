@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -17,6 +19,7 @@ public class AlgaeSubsystem extends SubsystemBase {
 
         motorConfig.idleMode(IdleMode.kBrake);
         motorConfig.smartCurrentLimit(Constants.SmartAlgaeLimit);
+        algaeMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public void setPower(double power) {
