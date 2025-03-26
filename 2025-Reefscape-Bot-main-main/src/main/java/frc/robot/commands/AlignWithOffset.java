@@ -67,7 +67,7 @@ public class AlignWithOffset extends Command{
       double ySpeed = -yController.calculate(positions[0]);
       double rotValue = -rotController.calculate(positions[4]);
       
-      driveBase.drive(new Translation2d(yController.getError() < Constants.Y_TOLERANCE_REEF_ALIGNMENT ? xSpeed : 0, ySpeed), rotValue, false);
+      driveBase.drive(new Translation2d(xSpeed, ySpeed), rotValue, false);
 
       if (!rotController.atSetpoint() || !yController.atSetpoint() || !xController.atSetpoint()) {
         stopTimer.reset();

@@ -53,7 +53,7 @@ public final class Constants {
    public static final int SmartAlgaeLimit = 40;
 
    // Climber subsystem constants
-   public static final int CLIMBER_MOTOR_ID = 22;
+   public static final int CLIMBER_MOTOR_ID = 41;
    public static final int SmartClimberLimit = 40;
 
   public static class OperatorConstants {

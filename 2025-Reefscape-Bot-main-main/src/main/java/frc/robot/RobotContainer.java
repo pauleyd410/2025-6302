@@ -128,8 +128,8 @@ public class RobotContainer {
     
     
     // Algae controls adjust motor speed as needed
-    operatorXbox.leftBumper().whileTrue(new IntakeAlgae(algae, .5));
-    operatorXbox.rightBumper().whileTrue(new ScoreAlgae(algae, .5));
+    operatorXbox.leftBumper().whileTrue(new IntakeAlgae(algae, 1));
+    operatorXbox.rightBumper().whileTrue(new ScoreAlgae(algae, 1));
     // Coral controls adjust motor speed as needed
     operatorXbox.leftTrigger().whileTrue(new IntakeCoral(coral, -.5));
     operatorXbox.rightTrigger().whileTrue(new ScoreCoral(coral, -.5));
